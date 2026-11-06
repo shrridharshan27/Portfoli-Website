@@ -16,6 +16,7 @@ export const portfolioData = {
     instagram: "https://www.instagram.com/shrri.dharshan/",
     email: "mailto:shrridharshanravikumar@gmail.com",
     phone: "tel:+919360747851",
+    portfolio: "https://shrri-dharshan-portfolio.vercel.app",
   },
   stats: [
     { label: "OCI AI Score", value: "88%", desc: "Oracle Cloud Certified" },
@@ -122,7 +123,7 @@ export const portfolioData = {
         "Evaluated on the PopQA benchmark: slashed hallucination rates from 31.4% to 14.6% and gained +11.2 accuracy points.",
         "Deployed on AWS cloud with a responsive web interface, local LLaMA 3 reasoning through Ollama, and vector similarity indexing via ChromaDB."
       ],
-      githubUrl: "https://github.com/shrridharshan27",
+      githubUrl: "https://github.com/shrridharshan27/CorrectiveRAG",
       isFeatured: true
     },
     {
@@ -144,7 +145,7 @@ export const portfolioData = {
         "Enforced multi-tier Role-Based Access Control (RBAC) across six user privilege tiers paired with TOTP-based Multi-Factor Authentication.",
         "Integrated spaCy-powered document classification, semantic search, sensitive entity redaction, dynamic risk scoring, and automated AI alert triggers for unauthorized access patterns."
       ],
-      githubUrl: "https://github.com/shrridharshan27",
+      githubUrl: "https://github.com/shrridharshan27/SecureDoc-LI",
       isFeatured: true
     },
     {
@@ -166,7 +167,7 @@ export const portfolioData = {
         "Engineered audio normalization, chunking, and compression using FFmpeg to handle multi-gigabyte audio streams gracefully.",
         "Implemented robust multi-model fallback logic to guarantee uninterrupted transcription during API disruptions."
       ],
-      githubUrl: "https://github.com/shrridharshan27",
+      githubUrl: "https://github.com/shrridharshan27/meeting-summarizer",
       isFeatured: true
     }
   ],
@@ -175,25 +176,25 @@ export const portfolioData = {
       title: "AI Story Generator",
       desc: "Interactive generative AI storytelling application generating rich branching plots and character arcs using LLMs.",
       tags: ["Python", "Generative AI", "Prompt Engineering"],
-      githubUrl: "https://github.com/shrridharshan27"
+      githubUrl: "https://github.com/shrridharshan27/Ai-story-generator"
     },
     {
       title: "QR Code Generator",
       desc: "High-resolution custom QR code generator with instant download, error correction tuning, and styling presets.",
       tags: ["JavaScript", "Web App", "Utility"],
-      githubUrl: "https://github.com/shrridharshan27"
+      githubUrl: "https://github.com/shrridharshan27/QR-Code-Generator"
     },
     {
       title: "Pixel Art Board",
       desc: "Interactive canvas-based retro art designer with full color palette selection, export options, and grid customization.",
       tags: ["JavaScript", "HTML5 Canvas", "CSS3"],
-      githubUrl: "https://github.com/shrridharshan27"
+      githubUrl: "https://github.com/shrridharshan27/Pixel-Art-Board"
     },
     {
       title: "BMI Calculator",
       desc: "Clean responsive health metric calculator providing immediate visual feedback, category breakdowns, and advice.",
       tags: ["JavaScript", "Responsive UI", "Health Tech"],
-      githubUrl: "https://github.com/shrridharshan27"
+      githubUrl: "https://github.com/shrridharshan27/BMI-Calculator"
     }
   ],
   certifications: [
