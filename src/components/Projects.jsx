@@ -1,79 +1,92 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   FolderGit2, 
   Github, 
-  ExternalLink, 
-  Sparkles, 
   CheckCircle2, 
-  TrendingUp, 
-  ShieldAlert, 
-  Zap, 
   Code,
-  Layers,
-  ArrowUpRight
+  ArrowUpRight,
+  Disc3,
+  Terminal,
+  Cpu
 } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 export default function Projects() {
-  const [filter, setFilter] = useState('all'); // 'all', 'featured', 'mini'
-
   return (
-    <section id="projects" className="py-24 relative bg-[#050811] bg-grid-pattern">
+    <section id="projects" className="py-28 relative bg-[#050811] bg-grid-pattern overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
+        <div className="text-center max-w-3xl mx-auto mb-20 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
             <FolderGit2 className="w-3.5 h-3.5" />
-            <span>PORTFOLIO SHOWCASE</span>
+            <span>SELECTED WORK · 05</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Featured <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">Projects</span>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+            Featured <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">Engineering</span>
           </h2>
           <p className="text-slate-400 text-base sm:text-lg">
-            High-impact AI systems, self-correcting RAG architectures, and encrypted enterprise workflows designed for real-world reliability.
+            High-stakes AI architectures, self-correcting RAG graphs, and encrypted enterprise workflows designed for real-world resilience.
           </p>
         </div>
 
-        {/* Featured Projects Cards */}
-        <div className="space-y-10 mb-20">
+        {/* Freefall-Style 3D Stacking Project Cards */}
+        <div className="space-y-12 max-w-5xl mx-auto mb-24">
           {portfolioData.featuredProjects.map((project, idx) => (
             <div 
               key={project.id}
-              className="glass-panel rounded-2xl border border-slate-800/90 overflow-hidden hover:border-cyan-500/40 transition-all duration-300 shadow-xl group"
+              className="sticky top-24 glass-panel rounded-3xl border border-slate-800 bg-[#0a101f]/95 backdrop-blur-2xl overflow-hidden hover:border-cyan-500/50 transition-all duration-500 shadow-2xl group"
+              style={{ top: `${96 + idx * 24}px` }}
+              data-cursor="Inspect"
             >
-              <div className="p-6 sm:p-8 lg:p-10">
+              <div className="p-7 sm:p-10 lg:p-12">
                 
-                {/* Header row: Badge, Period, GitHub button */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
-                      {project.badge}
+                {/* Header Row: Index Number, Spinning Disc, Period & Link */}
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800/80">
+                  <div className="flex items-center gap-4">
+                    {/* Index Number */}
+                    <span className="font-mono text-3xl sm:text-4xl font-black text-cyan-500/40 group-hover:text-cyan-400 transition-colors">
+                      0{idx + 1}
                     </span>
-                    <span className="text-xs font-mono text-slate-400">
-                      {project.period}
-                    </span>
+                    
+                    {/* Badge & Period */}
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
+                        <span>{project.badge}</span>
+                      </div>
+                      <div className="text-xs font-mono text-slate-400 mt-1">
+                        {project.period}
+                      </div>
+                    </div>
                   </div>
 
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700/60 hover:border-cyan-500/40 transition-all"
-                  >
-                    <Github className="w-4 h-4 text-cyan-400" />
-                    <span>View Repository</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
-                  </a>
+                  {/* Spinning Disc + GitHub Action Button */}
+                  <div className="flex items-center gap-3">
+                    <Disc3 className="w-6 h-6 text-slate-600 group-hover:text-cyan-400 animate-spin-slow transition-colors hidden sm:block" />
+                    
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-semibold bg-slate-900 hover:bg-slate-800 text-white border border-slate-700/80 hover:border-cyan-400 shadow-md transition-all active:scale-95"
+                      data-cursor="GitHub"
+                    >
+                      <Github className="w-4 h-4 text-cyan-400" />
+                      <span>View Code</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
+                    </a>
+                  </div>
                 </div>
 
-                {/* Project Titles */}
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white group-hover:text-cyan-300 transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-base font-semibold text-cyan-400/90 mt-1">
-                  {project.subtitle}
-                </p>
+                {/* Project Title & Subtitle */}
+                <div className="space-y-1 mb-4">
+                  <h3 className="text-2xl sm:text-4xl font-extrabold text-white group-hover:text-cyan-300 transition-colors tracking-tight">
+                    {project.title}
+                  </h3>
+                  <p className="text-base sm:text-lg font-semibold text-cyan-400/90 font-mono">
+                    {project.subtitle}
+                  </p>
+                </div>
 
                 {/* Detailed Description */}
                 <p className="text-slate-300 text-sm sm:text-base leading-relaxed mt-4">
@@ -85,12 +98,12 @@ export default function Projects() {
                   {project.metrics.map((metric, mIdx) => (
                     <div 
                       key={mIdx}
-                      className="p-3 rounded-xl bg-slate-900/80 border border-slate-800/80 flex flex-col justify-center"
+                      className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800/90 flex flex-col justify-center group-hover:border-cyan-500/20 transition-colors"
                     >
-                      <span className="text-xs font-mono text-slate-400">
+                      <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
                         {metric.label}
                       </span>
-                      <span className="text-base sm:text-lg font-bold text-cyan-300 font-mono mt-0.5">
+                      <span className="text-lg sm:text-xl font-black text-cyan-300 font-mono mt-1">
                         {metric.value}
                       </span>
                     </div>
@@ -98,9 +111,9 @@ export default function Projects() {
                 </div>
 
                 {/* Bullet Points */}
-                <div className="space-y-2 mb-6 border-t border-slate-800/80 pt-4">
+                <div className="space-y-2.5 mb-6 border-t border-slate-800/80 pt-5">
                   {project.bullets.map((bullet, bIdx) => (
-                    <div key={bIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                    <div key={bIdx} className="flex items-start gap-3 text-xs sm:text-sm text-slate-300">
                       <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                       <span className="leading-relaxed">{bullet}</span>
                     </div>
@@ -109,11 +122,11 @@ export default function Projects() {
 
                 {/* Technologies List */}
                 <div className="flex flex-wrap items-center gap-2 pt-2">
-                  <span className="text-xs font-mono text-slate-500 mr-2">Built with:</span>
+                  <span className="text-xs font-mono text-slate-500 mr-2">Core Tech:</span>
                   {project.technologies.map((tech, tIdx) => (
                     <span 
                       key={tIdx}
-                      className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#070b14] text-slate-300 border border-slate-800"
+                      className="px-3 py-1 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-300 border border-slate-800 group-hover:border-slate-700 transition-colors"
                     >
                       {tech}
                     </span>
@@ -125,33 +138,38 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Mini Projects Section */}
-        <div>
+        {/* Mini Projects Grid */}
+        <div className="pt-12">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <h3 className="text-2xl font-bold text-white">
-              Mini Projects & <span className="text-cyan-400">Utilities</span>
+            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-slate-900 border border-slate-800 text-slate-400 text-xs font-mono">
+              <Terminal className="w-3 h-3 text-cyan-400" />
+              <span>UTILITIES & LAB EXPERIMENTS</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-bold text-white">
+              Mini Projects & <span className="text-cyan-400">Published Tools</span>
             </h3>
             <p className="text-slate-400 text-sm">
-              Functional tools, creative AI experiments, and interactive web utilities published on GitHub.
+              Functional tools, creative AI experiments, and web applications published on GitHub.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
             {portfolioData.miniProjects.map((mini, idx) => (
               <div 
                 key={idx}
-                className="glass-panel glass-panel-hover p-5 rounded-xl border border-slate-800 flex flex-col justify-between group"
+                className="glass-panel glass-panel-hover p-6 rounded-2xl border border-slate-800 flex flex-col justify-between group"
+                data-cursor="Open"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-8 h-8 rounded-lg bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-9 h-9 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
                       <Code className="w-4 h-4" />
                     </div>
                     <a
                       href={mini.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-slate-400 hover:text-white transition-colors"
+                      className="p-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
                       title="View GitHub repository"
                       aria-label={`View ${mini.title} repository`}
                     >
