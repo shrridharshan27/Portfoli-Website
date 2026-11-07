@@ -43,7 +43,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050811] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/20 selection:text-cyan-300 relative">
+    <div className="min-h-screen bg-void text-bone flex flex-col font-display selection:bg-cyan-400 selection:text-black relative">
+      {/* Freefall Film Grain Texture */}
+      <div className="grain" aria-hidden="true" />
+
       {/* Freefall-Style Magnetic Custom Cursor */}
       <CustomCursor />
 

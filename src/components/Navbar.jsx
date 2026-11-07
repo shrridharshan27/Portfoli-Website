@@ -1,188 +1,126 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Mail, ExternalLink, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu, X, ArrowUpRight, Radio, Compass } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Education', href: '#education' },
-    { name: 'Certifications', href: '#certifications' },
-    { name: 'Leadership', href: '#leadership' },
-    { name: 'GitHub', href: '#github' },
-    { name: 'Contact', href: '#contact' },
+  const chapters = [
+    { num: '01', name: 'The Surface', href: '#home', sub: 'Hero & Telemetry' },
+    { num: '02', name: 'Core Philosophy', href: '#manifesto', sub: 'Engineering Manifesto' },
+    { num: '03', name: 'Background', href: '#about', sub: 'VIT Chennai CPS' },
+    { num: '04', name: 'Architecture & Stack', href: '#skills', sub: 'Technical Capabilities' },
+    { num: '05', name: 'Selected Work', href: '#projects', sub: 'CorrectiveRAG & SecureDoc' },
+    { num: '06', name: 'Qualifications', href: '#education', sub: 'B.Tech CSE & Academics' },
+    { num: '07', name: 'Verified Credentials', href: '#certifications', sub: 'Oracle AI 88% & Wireshark' },
+    { num: '08', name: 'Community Leadership', href: '#leadership', sub: 'VP Fitness Club' },
+    { num: '09', name: 'Telemetry & Git', href: '#github', sub: 'Live GitHub Repositories' },
+    { num: '10', name: 'The Terminal', href: '#contact', sub: 'Direct Communication' },
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-
-      const sections = navLinks.map(link => link.href.substring(1));
-      const scrollPos = window.scrollY + 200;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
-      if (window.scrollY < 200) {
-        setActiveSection('home');
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-[#070b14]/85 backdrop-blur-md border-b border-cyan-500/10 shadow-lg shadow-black/40 py-3' 
-          : 'bg-transparent py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          {/* Logo / Monogram */}
-          <a 
-            href="#home" 
-            className="flex items-center gap-3 group focus:outline-none"
-            aria-label="Home"
-          >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-[1.5px] transition-transform duration-300 group-hover:scale-105 shadow-md shadow-cyan-500/20">
-              <div className="w-full h-full bg-[#0a101f] rounded-[10px] flex items-center justify-center font-mono font-bold text-cyan-400 text-lg">
-                SD
-              </div>
-            </div>
-            <div>
-              <span className="font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors tracking-tight text-base sm:text-lg">
-                Shrri Dharshan
-              </span>
-              <span className="hidden sm:inline-block ml-2 text-xs font-mono px-2 py-0.5 rounded-full bg-cyan-950/60 text-cyan-400 border border-cyan-500/20">
-                AI / Dev
-              </span>
-            </div>
-          </a>
+    <>
+      {/* Freefall Difference-Blend Fixed Nav */}
+      <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-12 py-5 flex items-center justify-between pointer-events-none">
+        
+        {/* Left: Menu Trigger */}
+        <button
+          onClick={() => setIsMenuOpen(true)}
+          className="pointer-events-auto flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-widest text-bone hover:text-cyan-400 transition-colors"
+          data-cursor="Menu"
+        >
+          <Menu className="w-4 h-4 text-cyan-400" />
+          <span>INDEX</span>
+        </button>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-            {navLinks.map((link) => {
-              const isActive = activeSection === link.href.substring(1);
-              return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActive 
-                      ? 'text-cyan-300 bg-cyan-950/50 border border-cyan-500/30' 
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/40'
-                  }`}
-                >
-                  {link.name}
-                </a>
-              );
-            })}
-          </nav>
+        {/* Center: Monogram / Name */}
+        <a
+          href="#home"
+          className="pointer-events-auto font-display font-black text-sm sm:text-base uppercase tracking-tight text-bone hover:text-cyan-400 transition-colors text-center hidden md:block"
+        >
+          SHRRI DHARSHAN <span className="font-serif italic font-normal text-ash lowercase text-sm">developer &amp; ai engineer</span>
+        </a>
 
-          {/* Action CTAs & Socials */}
-          <div className="hidden md:flex items-center gap-3">
-            <a
-              href={portfolioData.socials.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub Profile"
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-            <a
-              href={portfolioData.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn Profile"
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 hover:from-cyan-400 hover:to-blue-500 transition-all duration-200 shadow-md shadow-cyan-500/25 active:scale-95"
-            >
-              <Mail className="w-4 h-4" />
-              <span>Let's Talk</span>
-            </a>
+        {/* Right: Status Pill & Let's Talk */}
+        <div className="pointer-events-auto flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/60 backdrop-blur-md font-mono text-[11px] text-ash">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span className="text-bone">SYS_ONLINE</span>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center gap-2">
-            <a
-              href="#contact"
-              className="px-3 py-1.5 rounded-md text-xs font-semibold bg-cyan-500 text-slate-950"
-            >
-              Contact
-            </a>
+          <a
+            href="#contact"
+            className="btn-freefall btn-freefall-solid text-[11px] py-2 px-5"
+            data-cursor="Write"
+          >
+            <span>Let's Talk</span>
+          </a>
+        </div>
+      </header>
+
+      {/* Freefall Full-Screen Chapter Menu Overlay */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-8 sm:p-16 overflow-y-auto animate-in fade-in duration-300"
+          role="dialog"
+          aria-label="Chapter Menu"
+        >
+          {/* Top Bar */}
+          <div className="flex items-center justify-between border-b border-white/10 pb-6">
+            <div className="font-mono text-xs text-ash tracking-widest uppercase flex items-center gap-2">
+              <Compass className="w-4 h-4 text-cyan-400" />
+              <span>NAVIGATION INDEX // 10 CHAPTERS</span>
+            </div>
+
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 focus:outline-none"
-              aria-label="Toggle menu"
+              onClick={() => setIsMenuOpen(false)}
+              className="flex items-center gap-2 font-mono text-xs font-bold text-bone hover:text-cyan-400 uppercase tracking-widest"
+              data-cursor="Close"
             >
-              {isOpen ? <X className="w-6 h-6 text-cyan-400" /> : <Menu className="w-6 h-6" />}
+              <span>ESC / CLOSE</span>
+              <X className="w-5 h-5 text-cyan-400" />
             </button>
           </div>
-        </div>
-      </div>
 
-      {/* Mobile Drawer */}
-      {isOpen && (
-        <div className="lg:hidden bg-[#0a101f]/95 backdrop-blur-xl border-b border-cyan-500/20 px-4 pt-3 pb-6 shadow-2xl transition-all">
-          <div className="flex flex-col space-y-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-800/50"
-              >
-                {link.name}
-              </a>
-            ))}
-            <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <a
-                  href={portfolioData.socials.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg text-slate-400 hover:text-white"
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-                <a
-                  href={portfolioData.socials.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg text-slate-400 hover:text-white"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </a>
-              </div>
-              <a
-                href={portfolioData.socials.email}
-                className="text-xs font-mono text-cyan-400 hover:underline"
-              >
-                {portfolioData.personal.email}
-              </a>
-            </div>
+          {/* Chapters List */}
+          <div className="my-auto py-12 max-w-4xl mx-auto w-full">
+            <ol className="space-y-4 sm:space-y-6">
+              {chapters.map((ch) => (
+                <li key={ch.num}>
+                  <a
+                    href={ch.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="group flex items-baseline justify-between py-2 border-b border-white/5 hover:border-cyan-400/40 transition-colors"
+                    data-cursor="Jump"
+                  >
+                    <div className="flex items-baseline gap-4 sm:gap-8">
+                      <span className="font-mono text-xs text-ash group-hover:text-cyan-400 transition-colors">
+                        {ch.num}
+                      </span>
+                      <span className="font-display text-2xl sm:text-4xl font-extrabold uppercase tracking-tight text-bone group-hover:text-cyan-400 transition-colors">
+                        {ch.name}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-xs text-ash hidden sm:inline group-hover:text-bone transition-colors">
+                        {ch.sub}
+                      </span>
+                      <ArrowUpRight className="w-4 h-4 text-slate-600 group-hover:text-cyan-400 transition-colors" />
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Bottom Footer Info */}
+          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-ash">
+            <span>SHRRI DHARSHAN D R · VIT CHENNAI</span>
+            <span>PRESS ANY SECTION TO JUMP DIRECTLY</span>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

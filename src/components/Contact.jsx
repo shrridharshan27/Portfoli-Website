@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Mail, 
   Phone, 
@@ -6,12 +6,12 @@ import {
   Send, 
   Copy, 
   Check, 
-  ExternalLink, 
   Github, 
   Linkedin, 
   Instagram, 
-  Sparkles,
-  MessageSquare
+  Terminal,
+  MessageSquare,
+  Clock
 } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
@@ -19,6 +19,7 @@ export default function Contact() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [timeStr, setTimeStr] = useState('');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -26,6 +27,24 @@ export default function Contact() {
     subject: '',
     message: ''
   });
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const options = {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      };
+      setTimeStr(`${new Intl.DateTimeFormat('en-GB', options).format(now)} IST`);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleCopy = (text, type) => {
     navigator.clipboard.writeText(text);
@@ -42,13 +61,11 @@ export default function Contact() {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
-    // Construct mailto link with prefilled subject and body
     const mailtoSubject = encodeURIComponent(formData.subject || `Inquiry from ${formData.name}`);
     const mailtoBody = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
     
-    // Open default mail client
     window.location.href = `mailto:${portfolioData.personal.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
     
     setFormSubmitted(true);
@@ -59,167 +76,144 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 relative bg-[#050811] bg-grid-pattern">
-      {/* Background Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
+    <section id="contact" className="py-28 relative bg-void border-t border-white/10 overflow-hidden">
+      
+      {/* Background glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-t from-cyan-600/10 via-indigo-600/5 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/20 text-cyan-400 text-xs font-mono">
-            <Mail className="w-3.5 h-3.5" />
-            <span>LET'S BUILD TOGETHER</span>
+        {/* Section Header */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-6 mb-16 font-mono text-xs text-ash tracking-widest uppercase">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+            <span className="text-bone font-semibold">CHAPTER 10 // THE PORTAL &amp; TERMINAL</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Contact <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">Me</span>
-          </h2>
-          <p className="text-slate-400 text-base sm:text-lg">
-            Have a project, research collaboration, internship, or full-time opportunity? Feel free to reach out directly!
-          </p>
+          <span>INITIATE DIRECT COMMUNICATION</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-6xl mx-auto">
+        {/* Freefall Giant Contact Statement */}
+        <div className="space-y-4 mb-16">
+          <p className="font-serif italic text-2xl sm:text-4xl text-ash">
+            "Every fall needs a way out. This is where you come in."
+          </p>
           
-          {/* Left Column: Direct Info Cards */}
-          <div className="lg:col-span-5 space-y-5">
+          {/* Giant Screen-Filling Email Link */}
+          <a
+            href={`mailto:${portfolioData.personal.email}`}
+            className="block font-display font-black text-3xl sm:text-5xl lg:text-7xl xl:text-8xl text-bone hover:text-cyan-400 transition-colors uppercase tracking-tight break-all leading-[0.9]"
+            data-cursor="Write"
+          >
+            {portfolioData.personal.email}
+          </a>
+        </div>
+
+        {/* Contact Layout Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          {/* Direct Details Column */}
+          <div className="lg:col-span-5 space-y-6">
             
-            {/* Email Card */}
-            <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <button
-                  onClick={() => handleCopy(portfolioData.personal.email, 'email')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono bg-slate-900 text-slate-300 hover:text-white border border-slate-800 hover:border-cyan-500/40 transition-colors"
-                  aria-label="Copy Email Address"
-                >
-                  {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedEmail ? 'Copied!' : 'Copy'}</span>
-                </button>
-              </div>
-
-              <div>
-                <span className="text-xs font-mono text-slate-400 uppercase">Email</span>
-                <a 
-                  href={`mailto:${portfolioData.personal.email}`}
-                  className="block text-slate-200 hover:text-cyan-300 font-semibold text-sm sm:text-base transition-colors break-all mt-0.5"
-                >
-                  {portfolioData.personal.email}
-                </a>
-              </div>
-            </div>
-
             {/* Phone Card */}
-            <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-xl bg-indigo-950/80 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <button
-                  onClick={() => handleCopy(portfolioData.personal.phone, 'phone')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono bg-slate-900 text-slate-300 hover:text-white border border-slate-800 hover:border-indigo-500/40 transition-colors"
-                  aria-label="Copy Phone Number"
-                >
-                  {copiedPhone ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedPhone ? 'Copied!' : 'Copy'}</span>
-                </button>
-              </div>
-
+            <div className="glass-panel p-6 rounded-2xl border border-white/10 flex items-center justify-between">
               <div>
-                <span className="text-xs font-mono text-slate-400 uppercase">Phone / WhatsApp</span>
+                <span className="text-xs font-mono text-ash uppercase">PHONE / WHATSAPP</span>
                 <a 
                   href={`tel:${portfolioData.personal.phone}`}
-                  className="block text-slate-200 hover:text-cyan-300 font-semibold text-sm sm:text-base transition-colors mt-0.5"
+                  className="block font-mono font-bold text-bone hover:text-cyan-400 transition-colors text-base sm:text-lg mt-1"
                 >
                   {portfolioData.personal.phone}
                 </a>
               </div>
+              <button
+                onClick={() => handleCopy(portfolioData.personal.phone, 'phone')}
+                className="btn-freefall btn-freefall-outline py-1.5 px-3 text-[11px]"
+                data-cursor="Copy"
+              >
+                {copiedPhone ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedPhone ? 'Copied' : 'Copy'}</span>
+              </button>
             </div>
 
-            {/* Location Card */}
-            <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-950/80 border border-purple-500/30 flex items-center justify-center text-purple-400">
-                <MapPin className="w-5 h-5" />
+            {/* Location & Time Card */}
+            <div className="glass-panel p-6 rounded-2xl border border-white/10 space-y-2">
+              <span className="text-xs font-mono text-ash uppercase">LOCATION &amp; TIMEZONE</span>
+              <div className="text-bone font-bold text-base sm:text-lg">
+                Chennai, Tamil Nadu, India
               </div>
-              <div>
-                <span className="text-xs font-mono text-slate-400 uppercase">Location</span>
-                <p className="text-slate-200 font-semibold text-sm sm:text-base mt-0.5">
-                  {portfolioData.personal.location}
-                </p>
-                <p className="text-xs text-slate-400 mt-1">
-                  Open to local opportunities in Chennai & Bangalore, and remote roles worldwide.
-                </p>
+              <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 pt-1">
+                <Clock className="w-3.5 h-3.5" />
+                <span>{timeStr || 'Asia/Kolkata (IST)'}</span>
+                <span className="text-ash">• Available Worldwide</span>
               </div>
             </div>
 
-            {/* Social Accounts Strip */}
-            <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-center justify-between">
-              <span className="text-xs font-mono text-slate-400">Social Channels:</span>
-              <div className="flex items-center gap-2">
+            {/* Social Channels */}
+            <div className="glass-panel p-6 rounded-2xl border border-white/10 space-y-4">
+              <span className="text-xs font-mono text-ash uppercase">VERIFIED NETWORKS</span>
+              <div className="flex flex-wrap gap-3">
                 <a
                   href={portfolioData.socials.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
-                  aria-label="GitHub"
+                  className="btn-freefall btn-freefall-outline py-2 px-4 text-xs"
+                  data-cursor="GitHub"
                 >
                   <Github className="w-4 h-4" />
+                  <span>GitHub</span>
                 </a>
                 <a
                   href={portfolioData.socials.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-[#0A66C2] hover:bg-slate-700 transition-colors"
-                  aria-label="LinkedIn"
+                  className="btn-freefall btn-freefall-outline py-2 px-4 text-xs"
+                  data-cursor="LinkedIn"
                 >
                   <Linkedin className="w-4 h-4" />
+                  <span>LinkedIn</span>
                 </a>
                 <a
                   href={portfolioData.socials.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-pink-400 hover:bg-slate-700 transition-colors"
-                  aria-label="Instagram"
+                  className="btn-freefall btn-freefall-outline py-2 px-4 text-xs"
+                  data-cursor="Instagram"
                 >
                   <Instagram className="w-4 h-4" />
+                  <span>Instagram</span>
                 </a>
               </div>
             </div>
 
           </div>
 
-          {/* Right Column: Contact Message Form */}
+          {/* Interactive Message Dispatch Form */}
           <div className="lg:col-span-7">
-            <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800 relative">
+            <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-white/10 relative">
               
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-cyan-400" />
-                <span>Send a Message</span>
-              </h3>
-              <p className="text-slate-400 text-sm mb-6">
-                Fill in the details below to dispatch an email directly to my inbox.
-              </p>
+              <div className="flex items-center gap-2 mb-6 font-mono text-xs text-cyan-400 uppercase tracking-wider">
+                <Terminal className="w-4 h-4" />
+                <span>DISPATCH MESSAGE PROTOCOL</span>
+              </div>
 
               {formSubmitted ? (
-                <div className="p-6 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-center space-y-2">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+                <div className="p-8 rounded-2xl bg-cyan-950/40 border border-cyan-400/40 text-center space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-cyan-400/20 text-cyan-400 flex items-center justify-center mx-auto">
                     <Check className="w-6 h-6" />
                   </div>
-                  <h4 className="text-lg font-bold text-white">Opening Email Client...</h4>
-                  <p className="text-sm text-slate-300">
-                    If your email client didn't open automatically, you can write to:
+                  <h4 className="text-xl font-bold font-display uppercase text-bone">Opening Email Client...</h4>
+                  <p className="text-sm text-ash">
+                    If your email client didn't launch automatically, write directly to:
                   </p>
-                  <div className="font-mono text-cyan-300 text-sm font-semibold select-all">
+                  <div className="font-mono text-cyan-400 font-semibold select-all text-sm">
                     {portfolioData.personal.email}
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4 font-mono text-xs">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="block text-xs font-mono text-slate-300 mb-1.5">
+                      <label htmlFor="name" className="block text-ash mb-1.5 uppercase">
                         Your Name *
                       </label>
                       <input
@@ -229,12 +223,12 @@ export default function Contact() {
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="John Doe"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-sm transition-all"
+                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/10 text-bone placeholder-white/20 focus:outline-none focus:border-cyan-400 text-sm transition-all"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-xs font-mono text-slate-300 mb-1.5">
+                      <label htmlFor="email" className="block text-ash mb-1.5 uppercase">
                         Your Email *
                       </label>
                       <input
@@ -244,13 +238,13 @@ export default function Contact() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="john@example.com"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-sm transition-all"
+                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/10 text-bone placeholder-white/20 focus:outline-none focus:border-cyan-400 text-sm transition-all"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-xs font-mono text-slate-300 mb-1.5">
+                    <label htmlFor="subject" className="block text-ash mb-1.5 uppercase">
                       Subject
                     </label>
                     <input
@@ -258,32 +252,33 @@ export default function Contact() {
                       type="text"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      placeholder="Project Inquiry / Job Opportunity"
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-sm transition-all"
+                      placeholder="AI Engineering Inquiry / Opportunity"
+                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/10 text-bone placeholder-white/20 focus:outline-none focus:border-cyan-400 text-sm transition-all"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-xs font-mono text-slate-300 mb-1.5">
+                    <label htmlFor="message" className="block text-ash mb-1.5 uppercase">
                       Message *
                     </label>
                     <textarea
                       id="message"
                       required
-                      rows={5}
+                      rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Hi Shrri, I came across your portfolio and would like to connect regarding..."
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-sm transition-all resize-none"
+                      placeholder="Hi Shrri, I would like to connect regarding..."
+                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/10 text-bone placeholder-white/20 focus:outline-none focus:border-cyan-400 text-sm transition-all resize-none font-sans"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 px-6 rounded-xl font-semibold text-slate-950 bg-gradient-to-r from-cyan-400 via-teal-400 to-cyan-500 hover:from-cyan-300 hover:to-teal-300 shadow-lg shadow-cyan-500/25 transition-all duration-200 active:scale-98 flex items-center justify-center gap-2 text-sm sm:text-base"
+                    className="w-full btn-freefall btn-freefall-solid py-4 text-xs font-mono font-bold tracking-widest mt-2"
+                    data-cursor="Send"
                   >
-                    <Send className="w-4 h-4" />
-                    <span>Send Message via Email</span>
+                    <Send className="w-4 h-4 mr-2" />
+                    <span>TRANSMIT DISPATCH VIA EMAIL</span>
                   </button>
                 </form>
               )}

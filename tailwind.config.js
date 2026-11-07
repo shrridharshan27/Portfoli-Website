@@ -8,25 +8,29 @@ export default {
   theme: {
     extend: {
       colors: {
+        void: '#000000',
+        bone: '#efe7da',
+        ash: '#8a847b',
+        molten: '#ffb23f',
+        ember: '#ff5a1e',
+        iris: '#8c8cff',
+        cyan: {
+          400: '#22d3ee',
+          500: '#06b6d4',
+          950: '#083344',
+        },
         dark: {
-          950: '#050811',
-          900: '#0a101f',
+          950: '#03060c',
+          900: '#070b14',
           850: '#0d1527',
           800: '#111c35',
-          700: '#1b2a4e',
-          600: '#2d3f6d',
-        },
-        accent: {
-          cyan: '#22d3ee',
-          emerald: '#10b981',
-          purple: '#a78bfa',
-          violet: '#7c3aed',
-          blue: '#3b82f6',
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Archivo', 'system-ui', 'sans-serif'],
+        serif: ['"Instrument Serif"', 'serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ['Archivo', 'system-ui', 'sans-serif'],
       },
       animation: {
         'glow-pulse': 'glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
